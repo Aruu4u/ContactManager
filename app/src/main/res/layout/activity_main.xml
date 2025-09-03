@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="clickHandler"
+            type="com.example.contactmanager.MainActivityClickHandlers" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bgm1"
+        tools:context=".MainActivity">
+
+        <!-- RecyclerView for contacts list -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerview"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <!-- Fragment container for showing contact details -->
+        <FrameLayout
+            android:id="@+id/fragment_container"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <!-- Floating Action Button to add new contact -->
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:layout_width="70dp"
+            android:layout_height="65dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:backgroundTint="#4FEAFF"
+            android:onClick="@{clickHandler::onFABClicked}"
+            android:src="@drawable/baseline_add_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
