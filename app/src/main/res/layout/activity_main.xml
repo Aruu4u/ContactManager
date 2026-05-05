@@ -35,17 +35,34 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent" >
+
+
+
+        </FrameLayout>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_sos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="16dp"
+            android:backgroundTint="#FF4242"
+            android:contentDescription="SOS"
+            android:src="@drawable/baseline_sos_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <!-- Floating Action Button to add new contact -->
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:layout_width="70dp"
-            android:layout_height="65dp"
+            android:id="@+id/fab_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
             android:backgroundTint="#4FEAFF"
             android:onClick="@{clickHandler::onFABClicked}"
-            android:src="@drawable/baseline_add_24"
+            android:src="@drawable/baseline_person_pin_24"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 

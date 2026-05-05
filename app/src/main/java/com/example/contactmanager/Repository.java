@@ -76,6 +76,15 @@ public class Repository {
 
     }
 
+    public void updateContact(Contacts cnt){
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                contactDAO.update(cnt);
+            }
+        });
+    }
+
 
 
     public LiveData<List<Contacts>> getAllContacts(){

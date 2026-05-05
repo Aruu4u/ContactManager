@@ -15,16 +15,22 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ContactViewHolder>
 
     private ArrayList<Contacts> contacts;
     private OnContactClickListener listener;
+    private OnContactLongClickListener longClickListener;
 
     // Interface for click callbacks
     public interface OnContactClickListener {
         void onContactClick(Contacts contact);
     }
 
+    public interface OnContactLongClickListener {
+        void onContactLongClick(Contacts contact);
+    }
+
     // Constructor accepts contact list and click listener
-    public MyAdapter(ArrayList<Contacts> contacts, OnContactClickListener listener) {
+    public MyAdapter(ArrayList<Contacts> contacts, OnContactClickListener listener, OnContactLongClickListener longClickListener) {
         this.contacts = contacts;
         this.listener = listener;
+        this.longClickListener = longClickListener;
     }
 
     @NonNull
@@ -49,6 +55,14 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ContactViewHolder>
             if (listener != null) {
                 listener.onContactClick(contact);
             }
+        });
+
+        holder.itemView.setOnLongClickListener(v -> {
+            if (longClickListener != null) {
+                longClickListener.onContactLongClick(contact);
+                return true;
+            }
+            return false;
         });
     }
 

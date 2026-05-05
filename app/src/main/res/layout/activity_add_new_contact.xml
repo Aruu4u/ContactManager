@@ -23,7 +23,6 @@
         tools:context=".AddNewContactActivity">
 
         <TextView
-
             android:id="@+id/titleTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -36,166 +35,130 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-
-        <!--        <EditText-->
-
-
-        <!--            android:id="@+id/editText"-->
-        <!--            android:layout_width="379dp"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:background="#EBFEFF"-->
-        <!--            android:ems="12"-->
-        <!--            android:hint="Enter Name"-->
-        <!--            android:inputType="textPersonName"-->
-        <!--            android:text="@={contact.name}"-->
-        <!--            android:textColor="@color/black"-->
-        <!--            android:textColorHint="@color/black"-->
-        <!--            tools:layout_editor_absoluteX="16dp"-->
-        <!--            tools:layout_editor_absoluteY="136dp" />-->
-
-        <!--        <EditText-->
-
-        <!--            android:id="@+id/emailEDT"-->
-        <!--            android:layout_width="379dp"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:background="#EBFEFF"-->
-        <!--            android:hint="Enter Email"-->
-        <!--            android:inputType="textEmailAddress"-->
-        <!--            android:text="@={contact.email}"-->
-        <!--            android:textColor="@color/black"-->
-        <!--            android:textColorHint="@color/black"-->
-        <!--            tools:layout_editor_absoluteX="16dp"-->
-        <!--            tools:layout_editor_absoluteY="200dp" />-->
-
-
-        <Button
-            android:id="@+id/submit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="44dp"
-            android:backgroundTint="#D7F9FF"
-            android:onClick="@{clickhandler::onSubmitBtnClicked}"
-            android:text="ADD CONTACT"
-
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.497"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayoutDescription"
-            tools:ignore="MissingConstraints" />
-
         <com.google.android.material.textfield.TextInputLayout
-            app:hintTextColor="#454545"
-            app:boxStrokeColor="@color/black"
-            app:boxStrokeWidthFocused="3dp"
-            app:startIconDrawable="@drawable/baseline_contacts_24"
             android:id="@+id/textInputLayout"
             style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-android:layout_marginHorizontal="10dp"
-            android:layout_marginTop="56dp"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="32dp"
+            app:boxStrokeColor="@color/black"
+            app:boxStrokeWidthFocused="3dp"
+            app:hintTextColor="#454545"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/titleTextView"
-            tools:ignore="MissingConstraints">
+            app:startIconDrawable="@drawable/baseline_contacts_24">
 
             <com.google.android.material.textfield.TextInputEditText
-android:textColor="@color/white"
                 android:id="@+id/textInputEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="60dp"
                 android:hint="Enter Name"
+                android:inputType="textPersonName"
                 android:text="@={contact.name}"
-                app:layout_constraintTop_toBottomOf="@+id/titleTextView"
-                tools:ignore="MissingConstraints"
-                tools:layout_editor_absoluteX="16dp" />
-
+                android:textColor="@color/black" />
         </com.google.android.material.textfield.TextInputLayout>
-
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayout3"
-            app:hintTextColor="#454545"
-            app:boxStrokeColor="@color/black"
-            app:boxStrokeWidthFocused="3dp"
-            app:startIconDrawable="@drawable/baseline_email_24"
             style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
-            android:layout_marginHorizontal="10dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
-            app:layout_constraintEnd_toEndOf="@+id/textInputLayout"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/textInputLayout"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="16dp"
+            app:boxStrokeColor="@color/black"
+            app:boxStrokeWidthFocused="3dp"
+            app:hintTextColor="#454545"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayout"
-            tools:ignore="MissingConstraints"
-            >
-
+            app:startIconDrawable="@drawable/baseline_email_24">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:textColor="@color/white"
                 android:id="@+id/textInputEditText2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="48dp"
                 android:hint="Enter Email"
+                android:inputType="textEmailAddress"
                 android:text="@={contact.email}"
-                app:layout_constraintEnd_toEndOf="@+id/textInputEditText"
-                app:layout_constraintStart_toStartOf="@+id/textInputEditText"
-                app:layout_constraintTop_toBottomOf="@+id/textInputEditText"
-                tools:ignore="MissingConstraints" />
+                android:textColor="@color/black" />
         </com.google.android.material.textfield.TextInputLayout>
-
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayout4"
-            app:hintTextColor="#454545"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="16dp"
             app:boxStrokeColor="@color/black"
             app:boxStrokeWidthFocused="3dp"
-            app:startIconDrawable="@drawable/baseline_call_24"
-            android:layout_marginHorizontal="10dp"
-            app:layout_constraintEnd_toEndOf="@+id/textInputLayout3"
-            app:layout_constraintStart_toStartOf="@+id/textInputLayout3"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayout3">
+            app:hintTextColor="#454545"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout3"
+            app:startIconDrawable="@drawable/baseline_call_24">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/textInputEditText3"
                 android:layout_width="match_parent"
-                android:inputType="number"
-                android:textColor="@color/white"
                 android:layout_height="wrap_content"
                 android:hint="Enter Number"
+                android:inputType="phone"
+                android:maxLength="10"
                 android:text="@={contact.number}"
-                tools:layout_editor_absoluteX="16dp"
-                tools:layout_editor_absoluteY="371dp" />
+                android:textColor="@color/black" />
         </com.google.android.material.textfield.TextInputLayout>
 
+        <TextView
+            android:id="@+id/wordCountTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0/30 words"
+            android:textColor="#454545"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toTopOf="@+id/textInputLayoutDescription"
+            app:layout_constraintEnd_toEndOf="@+id/textInputLayoutDescription" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayoutDescription"
             style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
-            app:hintTextColor="#454545"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="16dp"
             app:boxStrokeColor="@color/black"
-           app:boxStrokeWidthFocused="3dp"
-            android:layout_marginHorizontal="10dp"
-            app:layout_constraintEnd_toEndOf="@+id/textInputLayout4"
-            app:layout_constraintStart_toStartOf="@+id/textInputLayout4"
+            app:boxStrokeWidthFocused="3dp"
+            app:hintTextColor="#454545"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayout4">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/textInputEditTextDescription"
                 android:layout_width="match_parent"
-                android:textColor="@color/white"
                 android:layout_height="wrap_content"
                 android:hint="Enter Description"
-                android:text="@={contact.description}" />
+                android:inputType="textMultiLine"
+                android:text="@={contact.description}"
+                android:textColor="@color/black" />
         </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/submit"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="32dp"
+            android:backgroundTint="#D7F9FF"
+            android:onClick="@{clickhandler::onSubmitBtnClicked}"
+            android:text="SAVE CONTACT"
+            android:textColor="#1E4B50"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayoutDescription" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

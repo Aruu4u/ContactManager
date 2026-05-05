@@ -2,6 +2,19 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-feature
+        android:name="android.hardware.telephony"
+        android:required="false" />
+
+    <!-- SMS aur Location permissions -->
+    <uses-permission android:name="android.permission.SEND_SMS"/>
+    <uses-permission android:name="android.permission.RECEIVE_SMS"/>
+    <uses-permission android:name="android.permission.READ_SMS"/>
+    <uses-permission android:name="android.permission.RECEIVE_WAP_PUSH"/>
+    <uses-permission android:name="android.permission.RECEIVE_MMS"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -12,18 +25,115 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ContactManager"
         tools:targetApi="31">
+
+        <!-- Main Activity -->
         <activity
             android:name=".AddNewContactActivity"
             android:exported="false" />
+
         <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-    </application>
 
+            <!-- SMS compose/view intents -->
+            <intent-filter>
+                <action android:name="android.intent.action.SENDTO" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:scheme="sms" />
+                <data android:scheme="smsto" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:scheme="sms" />
+                <data android:scheme="smsto" />
+            </intent-filter>
+
+            <!-- Important: SMS deliver intent -->
+            <intent-filter>
+                <action android:name="android.provider.Telephony.SMS_DELIVER" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <!-- Ye service activity ke andar NHI, yaha application level pe rahegi -->
+
+    </application>
 </manifest>
+
+
+    <!--<?xml version="1.0" encoding="utf-8"?>-->
+<!--<manifest xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    xmlns:tools="http://schemas.android.com/tools">-->
+
+<!--    <uses-feature-->
+<!--        android:name="android.hardware.telephony"-->
+<!--        android:required="false" />-->
+
+<!--    <uses-permission android:name="android.permission.SEND_SMS"/>-->
+<!--    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>-->
+<!--    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>-->
+<!--    <uses-permission android:name="android.permission.SEND_SMS"/>-->
+<!--    <uses-permission android:name="android.permission.RECEIVE_SMS"/>-->
+<!--    <uses-permission android:name="android.permission.READ_SMS"/>-->
+<!--    <uses-permission android:name="android.permission.RECEIVE_WAP_PUSH"/>-->
+<!--    <uses-permission android:name="android.permission.RECEIVE_MMS"/>-->
+
+
+<!--    <application-->
+<!--        android:allowBackup="true"-->
+<!--        android:dataExtractionRules="@xml/data_extraction_rules"-->
+<!--        android:fullBackupContent="@xml/backup_rules"-->
+<!--        android:icon="@drawable/logo"-->
+<!--        android:label="@string/app_name"-->
+<!--        android:roundIcon="@drawable/logo"-->
+<!--        android:supportsRtl="true"-->
+<!--        android:theme="@style/Theme.ContactManager"-->
+<!--        tools:targetApi="31">-->
+<!--        <activity-->
+<!--            android:name=".AddNewContactActivity"-->
+<!--            android:exported="false" />-->
+<!--        <activity-->
+<!--            android:name=".MainActivity"-->
+<!--            android:exported="true">-->
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.SENDTO" />-->
+<!--                <category android:name="android.intent.category.DEFAULT" />-->
+<!--                <data android:scheme="sms" />-->
+<!--                <data android:scheme="smsto" />-->
+<!--            </intent-filter>-->
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.VIEW" />-->
+<!--                <category android:name="android.intent.category.DEFAULT" />-->
+<!--                <data android:scheme="sms" />-->
+<!--                <data android:scheme="smsto" />-->
+<!--            </intent-filter>-->
+<!--            <intent-filter>-->
+<!--                <action android:name="android.provider.Telephony.SMS_DELIVER" />-->
+<!--                <category android:name="android.intent.category.DEFAULT" />-->
+<!--            </intent-filter>-->
+
+<!--            <service-->
+<!--                android:name=".MySmsService"-->
+<!--                android:permission="android.permission.BIND_TELEPHONY_SERVICE"-->
+<!--                android:exported="true"-->
+<!--                tools:ignore="WrongManifestParent">-->
+<!--                <intent-filter>-->
+<!--                    <action android:name="android.telephony.TelephonyService" />-->
+<!--                </intent-filter>-->
+<!--            </service>-->
+
+<!--        </activity>-->
+
+<!--    </application>-->
+
+<!--</manifest>-->

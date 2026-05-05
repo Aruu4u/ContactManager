@@ -1,16 +1,24 @@
+
 package com.example.contactmanager;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Telephony;
+import android.telephony.SmsManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
+import android.Manifest;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -23,6 +31,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.contactmanager.databinding.ActivityMainBinding;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding mainBinding;
     private MyAdapter myAdapter;
     private ArrayList<Contacts> contactsArrayList = new ArrayList<>();
+    private static final int REQUEST_DEFAULT_SMS = 200;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,15 +58,30 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
+
+
+        // ✅ Runtime permissions
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS)
+                != PackageManager.PERMISSION_GRANTED ||
+                ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                        != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.SEND_SMS, Manifest.permission.ACCESS_FINE_LOCATION},
+                    101);
+        }
+
         RecyclerView recyclerView = mainBinding.recyclerview;
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
 
-        // Initialize adapter with click listener
-        myAdapter = new MyAdapter(contactsArrayList, contact -> openContactDetailFragment(contact));
+        myAdapter = new MyAdapter(contactsArrayList, contact -> openContactDetailFragment(contact), contact -> {
+            Intent intent = new Intent(MainActivity.this, AddNewContactActivity.class);
+            intent.putExtra("contact_to_edit", contact);
+            startActivity(intent);
+        });
         recyclerView.setAdapter(myAdapter);
 
-        // ViewModel to observe contact list
         MyViewModel viewModel = new ViewModelProvider(this).get(MyViewModel.class);
         viewModel.getAllContacts().observe(this, new Observer<List<Contacts>>() {
             @Override
@@ -69,13 +94,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // Swipe to delete functionality
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView,
                                   @NonNull RecyclerView.ViewHolder viewHolder,
                                   @NonNull RecyclerView.ViewHolder target) {
-                return false; // no drag & drop
+                return false;
             }
 
             @Override
@@ -85,20 +109,63 @@ public class MainActivity extends AppCompatActivity {
             }
         }).attachToRecyclerView(recyclerView);
 
+        FloatingActionButton sosButton = findViewById(R.id.fab_sos);
+        sosButton.setOnClickListener(v -> sendSOS());
+
 
     }
 
-    // Open fragment to show contact details
+    // ✅ Handle result of default SMS selection
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_DEFAULT_SMS) {
+            String defaultSmsApp = Telephony.Sms.getDefaultSmsPackage(this);
+
+            if (defaultSmsApp != null && defaultSmsApp.equals(getPackageName())) {
+                Toast.makeText(this, "App set as default SMS app!", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "Not set as default SMS app", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+
+    private void sendSOS() {
+        LocationHelper locationHelper = new LocationHelper(this);
+        locationHelper.getCurrentLocation(location -> {
+            if (location != null) {
+                String message = "🚨 SOS! I need help.\nMy location: "
+                        + "https://maps.google.com/?q=" + location.getLatitude() + "," + location.getLongitude();
+
+                try {
+                    Intent sendIntent = new Intent();
+                    sendIntent.setAction(Intent.ACTION_SEND);
+                    sendIntent.putExtra(Intent.EXTRA_TEXT, message);
+                    sendIntent.setType("text/plain");
+                    sendIntent.setPackage("com.whatsapp"); // ✅ only WhatsApp
+                    startActivity(sendIntent);
+                } catch (Exception e) {
+                    Toast.makeText(this, "WhatsApp not installed!", Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                Toast.makeText(this, "Location not found", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+
+
+
     private void openContactDetailFragment(Contacts contact) {
         ContactDetailFragment fragment = ContactDetailFragment.newInstance(contact);
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.fragment_container, fragment)  // your fragment container ID in activity_main.xml
+                .replace(R.id.fragment_container, fragment)
                 .addToBackStack(null)
                 .commit();
     }
 
-    // ContactDetailFragment showing details and call/email options
     public static class ContactDetailFragment extends Fragment {
 
         private static final String ARG_CONTACT = "arg_contact";
@@ -120,8 +187,6 @@ public class MainActivity extends AppCompatActivity {
             if (getArguments() != null) {
                 contact = (Contacts) getArguments().getSerializable(ARG_CONTACT);
             }
-
-
         }
 
         @Override
@@ -152,4 +217,7 @@ public class MainActivity extends AppCompatActivity {
             return view;
         }
     }
-}
+
+    }
+
+

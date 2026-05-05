@@ -40,5 +40,9 @@ public class MyViewModel extends AndroidViewModel {                        //if 
         myRepository.deleteContact(cnt);
     } //
 
+    public void updateContact(Contacts cnt){
+        myRepository.updateContact(cnt);
+    }
+
 
 }

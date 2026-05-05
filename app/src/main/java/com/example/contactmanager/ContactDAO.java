@@ -19,6 +19,9 @@ public interface ContactDAO {
     @Delete
     void delete(Contacts cnt);
 
+    @androidx.room.Update
+    void update(Contacts cnt);
+
     @Query("SELECT * FROM contact_table")// this is a custom query which shows the item of list @Query is used for custom queries
     LiveData<List<Contacts>> getAllContacts();  // return type should be a list of Contact objects
     // WE USE LIVE DATA, now the room library ensures that data is observed by the REPOSITORY or ViewModel allowing real time update to ui.
