@@ -14,6 +14,7 @@ import java.util.ArrayList;
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ContactViewHolder> {
 
     private ArrayList<Contacts> contacts;
+    private ArrayList<Contacts> contactsFull; // For searching
     private OnContactClickListener listener;
     private OnContactLongClickListener longClickListener;
 
@@ -26,11 +27,19 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ContactViewHolder>
         void onContactLongClick(Contacts contact);
     }
 
+    public interface OnStarClickListener {
+        void onStarClick(Contacts contact);
+    }
+
+    private OnStarClickListener starClickListener;
+
     // Constructor accepts contact list and click listener
-    public MyAdapter(ArrayList<Contacts> contacts, OnContactClickListener listener, OnContactLongClickListener longClickListener) {
+    public MyAdapter(ArrayList<Contacts> contacts, OnContactClickListener listener, OnContactLongClickListener longClickListener, OnStarClickListener starClickListener) {
         this.contacts = contacts;
+        this.contactsFull = new ArrayList<>(contacts);
         this.listener = listener;
         this.longClickListener = longClickListener;
+        this.starClickListener = starClickListener;
     }
 
     @NonNull
@@ -64,6 +73,27 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ContactViewHolder>
             }
             return false;
         });
+
+        // Set star state
+        if (contact.isFavorite()) {
+            holder.contactListitemBinding.starImageView.setImageResource(R.drawable.ic_star_24);
+        } else {
+            holder.contactListitemBinding.starImageView.setImageResource(R.drawable.ic_star_outline_24);
+        }
+
+        // Set star click listener
+        holder.contactListitemBinding.starImageView.setOnClickListener(v -> {
+            if (starClickListener != null) {
+                starClickListener.onStarClick(contact);
+            }
+        });
+
+        // Set avatar image
+        if (contact.getProfileImageUri() != null && !contact.getProfileImageUri().isEmpty()) {
+            holder.contactListitemBinding.avatarImageView.setImageURI(android.net.Uri.parse(contact.getProfileImageUri()));
+        } else {
+            holder.contactListitemBinding.avatarImageView.setImageResource(R.drawable.baseline_person_pin_24);
+        }
     }
 
     @Override
@@ -74,6 +104,23 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ContactViewHolder>
     // Update contacts list and refresh RecyclerView
     public void setContacts(ArrayList<Contacts> contacts) {
         this.contacts = contacts;
+        this.contactsFull = new ArrayList<>(contacts);
+        notifyDataSetChanged();
+    }
+
+    // Filter logic for search
+    public void filter(String text) {
+        contacts.clear();
+        if (text.isEmpty()) {
+            contacts.addAll(contactsFull);
+        } else {
+            text = text.toLowerCase();
+            for (Contacts item : contactsFull) {
+                if (item.getName().toLowerCase().contains(text) || item.getNumber().contains(text)) {
+                    contacts.add(item);
+                }
+            }
+        }
         notifyDataSetChanged();
     }
 

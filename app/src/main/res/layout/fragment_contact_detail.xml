@@ -7,7 +7,7 @@
     android:layout_margin="16dp"
     app:cardCornerRadius="20dp"
     app:cardElevation="12dp"
-    app:cardBackgroundColor="#CAF3F8">
+    app:cardBackgroundColor="@color/cardBackground">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -23,7 +23,7 @@
             android:paddingBottom="24dp"
             android:text="Description here"
             android:textAlignment="center"
-            android:textColor="@color/black"
+            android:textColor="@color/textPrimary"
             android:textSize="20sp" />
 
         <!-- Call Button -->
@@ -31,9 +31,9 @@
             android:id="@+id/buttonCall"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="#02D7F8"
+            android:backgroundTint="@color/buttonTint"
             android:text="Call"
-            android:textColor="@color/black"
+            android:textColor="@color/buttonText"
             android:textStyle="bold" />
 
         <!-- Email Button -->
@@ -42,9 +42,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:backgroundTint="#02D7F8"
+            android:backgroundTint="@color/buttonTint"
             android:text="Send Email"
-            android:textColor="@color/black"
+            android:textColor="@color/buttonText"
             android:textStyle="bold" />
 
     </LinearLayout>

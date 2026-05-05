@@ -29,6 +29,10 @@ public class Contacts extends BaseObservable implements Serializable {
 
     private String description;
 
+    private String profileImageUri;
+    private boolean isFavorite;
+    private String category;
+
     public Contacts() {
     }
 
@@ -76,4 +80,13 @@ public class Contacts extends BaseObservable implements Serializable {
 
     public String getDescription() { return description; }
     public void setDescription(String description) { this.description = description; }
+
+    public String getProfileImageUri() { return profileImageUri; }
+    public void setProfileImageUri(String profileImageUri) { this.profileImageUri = profileImageUri; }
+
+    public boolean isFavorite() { return isFavorite; }
+    public void setFavorite(boolean favorite) { isFavorite = favorite; }
+
+    public String getCategory() { return category; }
+    public void setCategory(String category) { this.category = category; }
 }

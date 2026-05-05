@@ -2,4 +2,13 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="windowBackground">#F3F4F6</color>
+    <color name="cardBackground">#71E5F2</color>
+    <color name="cardBackgroundSolid">#FFFFFF</color>
+    <color name="textPrimary">#000000</color>
+    <color name="textSecondary">#444444</color>
+    <color name="textTertiary">#454545</color>
+    <color name="buttonTint">#D7F9FF</color>
+    <color name="buttonText">#1E4B50</color>
+    <color name="categoryChip">#E0E0E0</color>
 </resources>

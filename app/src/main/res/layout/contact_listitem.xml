@@ -10,7 +10,7 @@
     </data>
 
     <androidx.cardview.widget.CardView
-        android:backgroundTint="#71E5F2"
+        app:cardBackgroundColor="@color/cardBackground"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardCornerRadius="20dp"
@@ -25,17 +25,37 @@
             android:layout_height="wrap_content"
             android:padding="16dp">
 
+            <androidx.cardview.widget.CardView
+                android:id="@+id/avatarCard"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                app:cardBackgroundColor="@color/cardBackgroundSolid"
+                app:cardCornerRadius="25dp"
+                app:cardElevation="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/avatarImageView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/baseline_person_pin_24" />
+            </androidx.cardview.widget.CardView>
+
             <TextView
                 android:id="@+id/name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
                 android:layout_marginEnd="8dp"
                 android:text="@{contact.name}"
-                android:textColor="@color/black"
-                android:textSize="22sp"
+                android:textColor="@color/textPrimary"
+                android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toStartOf="@+id/number"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/avatarCard"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="Contact Name" />
 
@@ -43,27 +63,55 @@
                 android:id="@+id/number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
                 android:text="@{contact.number}"
-                android:textColor="@color/black"
-                android:textSize="16sp"
+                android:textColor="@color/textPrimary"
+                android:textSize="14sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/name"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/starImageView"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="123-456-7890" />
+
+            <ImageView
+                android:id="@+id/starImageView"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:padding="4dp"
+                android:src="@drawable/ic_star_outline_24"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/email"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="4dp"
                 android:text="@{contact.email}"
-                android:textColor="#444444"
-                android:textSize="16sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                android:textColor="@color/textSecondary"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toStartOf="@+id/starImageView"
+                app:layout_constraintStart_toStartOf="@+id/name"
                 app:layout_constraintTop_toBottomOf="@+id/name"
                 tools:text="email@example.com" />
+
+            <TextView
+                android:id="@+id/categoryChip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:background="@color/categoryChip"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="2dp"
+                android:text="@{contact.category}"
+                android:textColor="@color/textSecondary"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:visibility="@{contact.category == null || contact.category.isEmpty() ? android.view.View.GONE : android.view.View.VISIBLE}"
+                app:layout_constraintStart_toStartOf="@+id/name"
+                app:layout_constraintTop_toBottomOf="@+id/email"
+                tools:text="Family" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

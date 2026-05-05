@@ -60,6 +60,9 @@ public class AddNewContactClickHandler {
                 contact.getDescription()
         );
         newContact.setId(contact.getId());
+        newContact.setProfileImageUri(contact.getProfileImageUri());
+        newContact.setFavorite(contact.isFavorite());
+        newContact.setCategory(contact.getCategory());
 
         if (isEditing) {
             myViewModel.updateContact(newContact);

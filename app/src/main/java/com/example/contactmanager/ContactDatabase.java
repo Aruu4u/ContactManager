@@ -9,7 +9,7 @@ import androidx.room.InvalidationTracker;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-@Database(entities ={Contacts.class} , version = 4)  // define the entities in the project , here we have only one entity i.e Contacts.class
+@Database(entities ={Contacts.class} , version = 5)  // define the entities in the project , here we have only one entity i.e Contacts.class
 public abstract class ContactDatabase extends RoomDatabase { // make an abstract class extend it with RoomDatabase
 
 

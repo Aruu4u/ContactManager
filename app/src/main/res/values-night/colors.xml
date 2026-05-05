@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="windowBackground">#121212</color>
+    <color name="cardBackground">#1E1E1E</color>
+    <color name="cardBackgroundSolid">#1E1E1E</color>
+    <color name="textPrimary">#FFFFFF</color>
+    <color name="textSecondary">#AAAAAA</color>
+    <color name="textTertiary">#CCCCCC</color>
+    <color name="buttonTint">#333333</color>
+    <color name="buttonText">#4FEAFF</color>
+    <color name="categoryChip">#333333</color>
+</resources>

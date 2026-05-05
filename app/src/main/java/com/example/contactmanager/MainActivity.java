@@ -35,6 +35,12 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.graphics.Canvas;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.Color;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -79,8 +85,31 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(MainActivity.this, AddNewContactActivity.class);
             intent.putExtra("contact_to_edit", contact);
             startActivity(intent);
+        }, contact -> {
+            contact.setFavorite(!contact.isFavorite());
+            MyViewModel viewModel = new ViewModelProvider(this).get(MyViewModel.class);
+            viewModel.updateContact(contact);
         });
         recyclerView.setAdapter(myAdapter);
+
+        // Setup Search
+        com.google.android.material.textfield.TextInputEditText searchEditText = mainBinding.getRoot().findViewById(R.id.searchEditText);
+        if (searchEditText != null) {
+            searchEditText.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    if (myAdapter != null) {
+                        myAdapter.filter(s.toString());
+                    }
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {}
+            });
+        }
 
         MyViewModel viewModel = new ViewModelProvider(this).get(MyViewModel.class);
         viewModel.getAllContacts().observe(this, new Observer<List<Contacts>>() {
@@ -94,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView,
                                   @NonNull RecyclerView.ViewHolder viewHolder,
@@ -104,8 +133,44 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-                Contacts contactToDelete = contactsArrayList.get(viewHolder.getAdapterPosition());
-                viewModel.deleteContact(contactToDelete);
+                Contacts swipedContact = contactsArrayList.get(viewHolder.getAdapterPosition());
+                if (direction == ItemTouchHelper.LEFT) {
+                    viewModel.deleteContact(swipedContact);
+                } else if (direction == ItemTouchHelper.RIGHT) {
+                    Intent intent = new Intent(Intent.ACTION_DIAL);
+                    intent.setData(Uri.parse("tel:" + swipedContact.getNumber()));
+                    startActivity(intent);
+                    myAdapter.notifyItemChanged(viewHolder.getAdapterPosition());
+                }
+            }
+
+            @Override
+            public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+                View itemView = viewHolder.itemView;
+                if (dX > 0) { // Swiping right
+                    ColorDrawable background = new ColorDrawable(Color.parseColor("#4CAF50"));
+                    background.setBounds(itemView.getLeft(), itemView.getTop(), itemView.getLeft() + (int) dX, itemView.getBottom());
+                    background.draw(c);
+
+                    Drawable icon = ContextCompat.getDrawable(MainActivity.this, R.drawable.baseline_call_24);
+                    if (icon != null) {
+                        int iconMargin = (itemView.getHeight() - icon.getIntrinsicHeight()) / 2;
+                        icon.setBounds(itemView.getLeft() + iconMargin, itemView.getTop() + iconMargin, itemView.getLeft() + iconMargin + icon.getIntrinsicWidth(), itemView.getBottom() - iconMargin);
+                        icon.draw(c);
+                    }
+                } else if (dX < 0) { // Swiping left
+                    ColorDrawable background = new ColorDrawable(Color.parseColor("#F44336"));
+                    background.setBounds(itemView.getRight() + (int) dX, itemView.getTop(), itemView.getRight(), itemView.getBottom());
+                    background.draw(c);
+
+                    Drawable icon = ContextCompat.getDrawable(MainActivity.this, R.drawable.ic_delete_24);
+                    if (icon != null) {
+                        int iconMargin = (itemView.getHeight() - icon.getIntrinsicHeight()) / 2;
+                        icon.setBounds(itemView.getRight() - iconMargin - icon.getIntrinsicWidth(), itemView.getTop() + iconMargin, itemView.getRight() - iconMargin, itemView.getBottom() - iconMargin);
+                        icon.draw(c);
+                    }
+                }
+                super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
             }
         }).attachToRecyclerView(recyclerView);
 

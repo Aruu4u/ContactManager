@@ -5,18 +5,26 @@ import android.os.Bundle;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
-
 import com.example.contactmanager.databinding.ActivityAddNewContactBinding;
+
+import android.content.Intent;
+import android.net.Uri;
+import android.widget.ArrayAdapter;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 
 public class AddNewContactActivity extends AppCompatActivity {
 
     private ActivityAddNewContactBinding binding;
     private AddNewContactClickHandler handler;
     private Contacts contacts;
+    private ActivityResultLauncher<String[]> imagePickerLauncher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +76,31 @@ public class AddNewContactActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(android.text.Editable s) {}
+        });
+
+        // Initialize Category Dropdown
+        String[] categories = new String[]{"Family", "Friends", "Work", "Emergency", "Other"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, categories);
+        binding.categoryAutoComplete.setAdapter(adapter);
+
+        // Load existing image if any
+        if (contacts.getProfileImageUri() != null && !contacts.getProfileImageUri().isEmpty()) {
+            binding.profileImageView.setImageURI(Uri.parse(contacts.getProfileImageUri()));
+        }
+
+        // Image Picker Launcher
+        imagePickerLauncher = registerForActivityResult(new ActivityResultContracts.OpenDocument(), uri -> {
+            if (uri != null) {
+                // Take persistable permission to keep access across reboots
+                getContentResolver().takePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                contacts.setProfileImageUri(uri.toString());
+                binding.profileImageView.setImageURI(uri);
+            }
+        });
+
+        // Image View Click Listener
+        binding.profileImageView.setOnClickListener(v -> {
+            imagePickerLauncher.launch(new String[]{"image/*"});
         });
     }
 
