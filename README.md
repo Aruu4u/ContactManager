@@ -15,33 +15,52 @@ A modern and intuitive Android application designed to help users manage their c
 
 ## Visual Tour
 
-### Main Dashboard
-![Main Activity](./screenshots/main_activity.png)
-*The central hub for all your contacts with a clean, card-based layout.*
-
-### Contact Details & Actions
-![Description Card](./screenshots/description_card.png)
-*View detailed contact information and quickly initiate calls or emails.*
-
-### Swipe to Call (Right)
-![Swipe Right](./screenshots/swipe_right.png)
-*Convenient gesture to call contacts directly from the list.*
-
-### Swipe to Delete (Left)
-![Swipe Left](./screenshots/swipe_left.png)
-*Quick and easy removal of unwanted contacts.*
-
-### SOS Emergency Feature
-![SOS Message](./screenshots/sos_message.png)
-*Send your current location coordinates via WhatsApp with a single tap.*
-
-### Adding a New Contact
-![Add Contact](./screenshots/add_contact.png)
-*Simple and organized form to save new connections.*
-
-### Real-time Search
-![Search Contact](./screenshots/search_contact.png)
-*Instantly filter your contact list to find exactly who you're looking for.*
+<table style="width: 100%; text-align: center;">
+  <tr>
+    <td style="width: 50%;">
+      <b>Main Dashboard</b><br/>
+      <img src="./screenshots/main_activity.png" width="280" alt="Main Dashboard"/><br/>
+      <i>The central hub for all your contacts.</i>
+    </td>
+    <td style="width: 50%;">
+      <b>Contact Details</b><br/>
+      <img src="./screenshots/description_card.png" width="280" alt="Contact Details"/><br/>
+      <i>View details and initiate actions.</i>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <b>Swipe to Call</b><br/>
+      <img src="./screenshots/swipe_right.png" width="280" alt="Swipe to Call"/><br/>
+      <i>Quick gesture for calling.</i>
+    </td>
+    <td>
+      <b>Swipe to Delete</b><br/>
+      <img src="./screenshots/swipe_left.png" width="280" alt="Swipe to Delete"/><br/>
+      <i>Quick gesture for deletion.</i>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <b>SOS Feature</b><br/>
+      <img src="./screenshots/sos_message.png" width="280" alt="SOS Feature"/><br/>
+      <i>Emergency location sharing.</i>
+    </td>
+    <td>
+      <b>Add Contact</b><br/>
+      <img src="./screenshots/add_contact.png" width="280" alt="Add Contact"/><br/>
+      <i>Form to save new connections.</i>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <b>Real-time Search</b><br/>
+      <img src="./screenshots/search_contact.png" width="280" alt="Real-time Search"/><br/>
+      <i>Instantly filter your list.</i>
+    </td>
+    <td></td>
+  </tr>
+</table>
 
 ## Tech Stack
 
