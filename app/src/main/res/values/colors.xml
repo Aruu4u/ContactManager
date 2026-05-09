@@ -11,4 +11,5 @@
     <color name="buttonTint">#D7F9FF</color>
     <color name="buttonText">#1E4B50</color>
     <color name="categoryChip">#E0E0E0</color>
+    <color name="detailCardBackground">#FFFFFF</color>
 </resources>

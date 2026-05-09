@@ -119,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
                 if (contacts != null) {
                     contactsArrayList.addAll(contacts);
                 }
-                myAdapter.notifyDataSetChanged();
+                myAdapter.setContacts(contactsArrayList);
             }
         });
 
@@ -259,11 +259,13 @@ public class MainActivity extends AppCompatActivity {
                                  Bundle savedInstanceState) {
             View view = inflater.inflate(R.layout.fragment_contact_detail, container, false);
 
+            TextView nameText = view.findViewById(R.id.textViewName);
             TextView descriptionText = view.findViewById(R.id.textViewDescription);
             View callButton = view.findViewById(R.id.buttonCall);
             View emailButton = view.findViewById(R.id.buttonEmail);
 
             if (contact != null) {
+                nameText.setText(contact.getName());
                 descriptionText.setText(contact.getDescription());
             }
 
